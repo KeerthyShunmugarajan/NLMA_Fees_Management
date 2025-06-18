@@ -1,22 +1,24 @@
-package com.feemanagement.demoFees.entity;
+package com.feemanagement.demoFees.DTO;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 
-@Table(name = "FEE_DETAILS")
-public class Fees {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long billNumber;
-
-    //@ManyToOne
-    //private Student student;
+public class FeesDTO {
+    //NEED TO ADD VALIDATIONS
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long billNumber;
     private String academicYear;
     private LocalDate dateOfBillng;
     private String currentClass;
@@ -26,7 +28,7 @@ public class Fees {
     private String paymentFrequency;
     private BigDecimal feeRecieved;
     private BigDecimal annualFee;
-    private String paymentMode;//"CASH","ONLINE"
+    private String paymentMode;
     private Boolean feeReduction;
     private BigDecimal amountReduced;
     private String adminRemarks;
@@ -34,4 +36,5 @@ public class Fees {
     private String status; // "PAID", "UNPAID","PENDING"
     private LocalDate dueDate;
     private LocalDate paidDate;
+
 }

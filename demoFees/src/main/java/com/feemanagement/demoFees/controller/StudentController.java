@@ -30,32 +30,32 @@ public class StudentController {
         return  studentService.createStudentData(student);
     }*/
 
-    @PostMapping("/")
+    @PostMapping("/students")
     public ResponseEntity<Map<String,String >> createStudentDataController(@Valid @RequestBody NewStudentDTO newstudentdto) {
         return  studentService.createStudentData(newstudentdto);
     }
 
     //Get ALL Student DAta
-    @GetMapping("/")
+    @GetMapping("/students")
     public ResponseEntity<?> getAllStudentsData() {
         return studentService.getStudentData();
     }
 
     //Get student data by ID
-    @GetMapping("/{id}")
+    @GetMapping("/students/{id}")
     public StudentViewDTO getStudentDataByIdController(@PathVariable("id") String id) {
         return studentService.getStudentDataById(id);
     }
 
 
     //update StudentData by passingID
-    @PutMapping("/{id}")
+    @PutMapping("/students/{id}")
     public ResponseEntity<Map<String,Object>> updateStudentData(@PathVariable("id") String id, @Valid @RequestBody StudentUpdateDTO studentUpdateDTO) {
         return studentService.updateStudentData(id, studentUpdateDTO);
     }
 
     //Delete Student data by ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/students/{id}")
     public ResponseEntity<Map<String,String>> deleteStudentById(@PathVariable("id") String id,@RequestParam(required = false) String reason) {
         return studentService.deleteStudentRecordByID(id,reason);
     }
