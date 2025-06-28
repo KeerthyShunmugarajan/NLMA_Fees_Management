@@ -1,10 +1,12 @@
 import path from "path";
 
-import { Configuration as WebpackConfiguration, HotModuleReplacementPlugin } from "webpack";
+import { Configuration as WebpackConfiguration, HotModuleReplacementPlugin, } from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import ESLintPlugin from "eslint-webpack-plugin";
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -49,6 +51,14 @@ const config: Configuration = {
       extensions: ["js", "jsx", "ts", "tsx"],
        emitWarning: true
     }),
+  new webpack.EnvironmentPlugin({
+  NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+  DEBUG: false,
+}),
+new Dotenv({
+  path: 'properties/.env.dev', // Path to .env file (this is the default)
+  safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
+}),
   ],
   devtool: "inline-source-map",
   devServer: {

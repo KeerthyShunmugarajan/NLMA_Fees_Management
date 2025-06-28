@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import App from "./views/App";
 
-const App = () => (
-  <h1>My React and TypeScript App!!{""}{new Date().toLocaleDateString()}</h1>
-);
-//const unused="something";
 const root=ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
+
+//TO DO
+//Redux Changes
+//
