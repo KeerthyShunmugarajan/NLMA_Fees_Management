@@ -7,7 +7,6 @@ const App = () => {
   return(
   <>
     <TestView message_P={message}/>
-
     <StudentRegistrationForm/>
   </>
   )
