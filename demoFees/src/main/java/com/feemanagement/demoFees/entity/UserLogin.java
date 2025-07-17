@@ -1,23 +1,20 @@
 package com.feemanagement.demoFees.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
-
+@Table(name = "LOGIN_DETAILS")
 public class UserLogin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
-    private String name;
+    private String userName;
     private String password;
     private String email;
-    private String message;
+    private String role;
 
     //Getter and Setter Methods
 

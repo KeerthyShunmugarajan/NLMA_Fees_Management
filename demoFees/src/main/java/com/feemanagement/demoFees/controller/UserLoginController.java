@@ -2,14 +2,21 @@ package com.feemanagement.demoFees.controller;
 
 import com.feemanagement.demoFees.DTO.UserLoginDTO;
 import com.feemanagement.demoFees.entity.UserLogin;
+import com.feemanagement.demoFees.service.StudentService;
+import com.feemanagement.demoFees.service.UserLoginService;
 import org.apache.catalina.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@RestController
 public class UserLoginController {
+    @Autowired
+    private UserLoginService userLoginService;
 
     private static final Map<String, UserRecord> USERS = new HashMap<>();
 
@@ -20,10 +27,17 @@ public class UserLoginController {
     }
 
     @PostMapping("/Auth")
-    public UserLogin login(@RequestBody UserLoginDTO login) {
+public ResponseEntity<UserLogin> createUserLoginAccount(@RequestBody UserLogin login){
+     return( userLoginService.createUserLogin(login));
+
+}
+
+    @GetMapping("/Auth/{name}/{password}")
+    public ResponseEntity<String> login(@PathVariable("name") String userName,
+                                   @PathVariable("password") String password) {
 
         //LOGIC TO check authentication
-        return null;
+        return userLoginService.ValidateUser(userName,password);
     }
 
 
