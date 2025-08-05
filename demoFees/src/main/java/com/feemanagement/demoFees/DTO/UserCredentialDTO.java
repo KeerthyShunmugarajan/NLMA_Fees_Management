@@ -10,11 +10,10 @@ import lombok.NoArgsConstructor;
 
 
 
-public class UserLoginDTO {
+public class UserCredentialDTO {
 
-    private Long id;
+
     private String userName;
     private String password;
-    private String email;
-    private String role;
+
 }

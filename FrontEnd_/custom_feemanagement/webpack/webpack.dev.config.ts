@@ -21,6 +21,10 @@ const config: Configuration = {
   module: {
     rules: [
       {
+        test: /\.css$/i, // this applies to all .css files
+        use: ['style-loader', 'css-loader'], // the order matters!
+      },
+      {
         test: /\.(ts|js)x?$/i,
         exclude: /node_modules/,
         use: {
@@ -33,6 +37,10 @@ const config: Configuration = {
             ],
           },
         },
+      },
+       {
+        test: /\.(png|jpg|gif|svg)$/i, // Matches common image file extensions
+        type: 'asset/resource', // Emits a separate file and exports the URI
       },
     ],
   },
