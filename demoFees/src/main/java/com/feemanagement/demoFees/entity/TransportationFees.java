@@ -1,13 +1,11 @@
 package com.feemanagement.demoFees.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
 
+@Entity
 @Table(name = "Transportation_Fee")
 @Data
 public class TransportationFees {
