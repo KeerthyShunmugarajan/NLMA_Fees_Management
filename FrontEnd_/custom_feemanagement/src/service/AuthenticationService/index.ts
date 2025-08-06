@@ -1,9 +1,6 @@
  import axios from 'axios';
 
-
-
-
- const authenticateUser=(payload:any)=>{
+ const  authenticateUser=(payload:any)=>{
     const url =`${process.env.BASE_URL}${process.env.AUTHENTICATION_ENDPOINT}`;
     console.log(payload);
     return axios.post(url,payload, 
@@ -14,7 +11,6 @@
         }).then((response:any)=>{
           console.log(response);
    return response.data;
-    // call the studentregistration here
 }).catch((error:any)=>
 {
     if (error.response && error.response.data && error.response.data.message) {
@@ -23,7 +19,9 @@
        return error.response.data;
       } else {
         console.error("Unexpected error:", error.message);
-        alert("Something went wrong. Please try again.");
+         // No response from server (backend down, network error, CORS issue)
+    alert("Server is not responding. Please try again later.");
+    return { error: "Server unavailable" }; // Optional: send a fallback error object
       }
 }
 );
