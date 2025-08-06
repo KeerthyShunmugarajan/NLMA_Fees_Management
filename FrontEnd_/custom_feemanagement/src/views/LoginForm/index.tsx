@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import authenticateUser  from "../../service/AuthenticationService";
-import '../../styles/loginForm.css';
+import  './loginForm.css';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { AuthenticateResponse } from "../../models/common.models";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,6 @@ alert(response.message);
             <form>
                 <div className="login-header">
                     <img className="login-header-img" src={logo}  alt="logo"></img> 
-                    {/* <span className="login-logo">insert logo</span> */}
                  <h2 className="login-title">NLMA LOGIN PORTAL</h2>
                 </div>
                 <div className="input-group"> 
