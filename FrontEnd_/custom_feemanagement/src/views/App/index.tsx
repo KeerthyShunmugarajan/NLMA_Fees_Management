@@ -14,10 +14,10 @@ const App = () => {
       <Route path="/" element={<Navigate to='/login'></Navigate>} />
        <Route path="/login" element={<LoginForm />} />
       <Route path="/testPage" element={<TestView message_Parent={message} />} />
-     
+      <Route path="/headerTab" element={<HeaderTab/>}/>
       <Route path="/students/newStudentRegistration" element={<StudentRegistrationForm />}  />
       <Route path="/students/:id/edit" element={<StudentRegistrationForm />} />
-      <Route path="/headerTab" element={<HeaderTab/>}/>
+     
       <Route path="/studentDetails" element={<StudentDetailsForm/>}/>
     </Routes>
 

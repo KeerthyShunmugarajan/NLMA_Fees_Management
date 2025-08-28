@@ -1,22 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion, AccordionSummary, AccordionDetails, Typography, TextField, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Grid";
 import './StudentRegistrationForm.css';
+import { data, useParams } from "react-router-dom";
+import { fetchStudentbyId } from "../../service/ListStudentDetailsService";
+import { Student } from "../../models/student.model";
 
 
 const StudentRegistrationForm = () => {
+  const { id } = useParams<{ id: string }>();
+  const [formData, setFormData] = useState<Student | null>(null);
+  console.log("id from URL:" + id);
+
+  useEffect(() => {
+    if (id) {
+      const loadStudentbyId = async () => {
+        const studentbyID = await fetchStudentbyId(id);
+        console.log(studentbyID);
+        setFormData(studentbyID);
+      };
+      loadStudentbyId();
+    };
+
+  }, [id]);
   return (
     <div className="stu-form-container">
-      <h2>Student Data</h2>
+      <h2>{id ? "Update Student Record" : "New Student Registration"}</h2>
 
       {/* <img
         src="https://cdn-icons-png.flaticon.com/512/3305/3305803.png"
         alt="Student Illustration"
       /> */}
-      <Typography variant="h4" align="center" gutterBottom>
-        Student Registration Form
-      </Typography>
+      {/* <Typography variant="h4" align="center" gutterBottom>
+        {id?"Update Student Details":"Student Registration Form"}
+      </Typography> */}
       {/* Office Details */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -28,7 +46,7 @@ const StudentRegistrationForm = () => {
               <TextField label="Application Number" variant="outlined" size="small" fullWidth />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Student ID" variant="outlined" size="small" fullWidth disabled />
+              <TextField id="studentId" label="Student ID" variant="outlined" size="small" fullWidth disabled value={formData?.studentId} />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <TextField label="Date of Joining" fullWidth type="date" InputLabelProps={{ shrink: true }} variant="outlined" size="small" />
@@ -51,10 +69,10 @@ const StudentRegistrationForm = () => {
           <Grid container spacing={2}>
             {/* Name: First & Last */}
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="First Name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }}/>
+              <TextField label="First Name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }} value={formData?.name} />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Last Name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }}/>
+              <TextField label="Last Name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }} value={formData?.name} />
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
@@ -63,10 +81,10 @@ const StudentRegistrationForm = () => {
 
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <FormControl component="fieldset" fullWidth>
-                <FormLabel component="legend"  sx={{ fontSize: "0.9rem", mb: 0.5 , typography: "body2"}} >Gender</FormLabel>
+                <FormLabel component="legend" sx={{ fontSize: "0.9rem", mb: 0.5, typography: "body2" }} >Gender</FormLabel>
                 <RadioGroup row>
                   <FormControlLabel value="Male" control={<Radio size="small" />} label="Male" />
-                  <FormControlLabel value="Female" control={<Radio size="small"/>} label="Female" />
+                  <FormControlLabel value="Female" control={<Radio size="small" />} label="Female" />
                 </RadioGroup>
               </FormControl>
             </Grid>
@@ -109,12 +127,26 @@ const StudentRegistrationForm = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={2}>
-            <label>Address Line 1: <input type="text" /></label>
-            <label>Address Line 2: <input type="text" /></label>
-            <label>Town: <input type="text" /></label>
-            <label>State: <input type="text" /></label>
-            <label>Pincode: <input type="text" /></label>
-            <label>Student Contact No: <input type="text" /></label>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+              <TextField label="Address Line 1" variant="outlined" size="small" />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+              <TextField label="Address Line 2" variant="outlined" size="small" />
+
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+              <TextField label="Town" variant="outlined" size="small" />
+
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+              <TextField label="State" variant="outlined" size="small" />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+              <TextField label="Pincode" variant="outlined" size="small" />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+              <TextField label="Student Contact number" variant="outlined" size="small" />
+            </Grid>
           </Grid>
         </AccordionDetails>
       </Accordion>
@@ -155,11 +187,11 @@ const StudentRegistrationForm = () => {
               <TextField label="Guardian's Name (If applicable)" variant="outlined" size="small" />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <TextField label="Guardian's Occupation" variant="outlined" size="small" />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <TextField label="Guardian's contact" variant="outlined" size="small" />
-          </Grid>
+              <TextField label="Guardian's Occupation" variant="outlined" size="small" />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+              <TextField label="Guardian's contact" variant="outlined" size="small" />
+            </Grid>
           </Grid>
         </AccordionDetails>
       </Accordion>
@@ -172,16 +204,16 @@ const StudentRegistrationForm = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={2}>
-            <Grid size={{xs:12,sm:6,md:3}}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <TextField label="Prev. School if any" fullWidth variant="outlined" size="small" />
             </Grid>
-            <Grid size={{xs:12,sm:6,md:3}}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <TextField label="Specific Areas of Interest" fullWidth variant="outlined" size="small" />
             </Grid>
-            <Grid size={{xs:12,sm:6,md:3}}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <TextField label="How did you know about NLMA?" fullWidth variant="outlined" size="small" />
             </Grid>
-            <Grid size={{xs:12,sm:6,md:3}}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <TextField label="Comments" fullWidth variant="outlined" size="small" />
             </Grid>
           </Grid>

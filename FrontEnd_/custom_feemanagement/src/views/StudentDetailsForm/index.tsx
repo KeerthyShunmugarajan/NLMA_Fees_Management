@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StudentDetailsResponse } from "../../models/student.models";
+import { StudentDetailsResponse } from "../../models/studentDetails.models";
 import fetchStudents from "../../service/ListStudentDetailsService";
 import { useNavigate } from "react-router-dom";
 
@@ -12,10 +12,11 @@ useEffect(()=>{
     };
 loadStudents();
 },[]);
+
 const navigate=useNavigate();
 const handleUpdate=(id:string)=>{
     console.log("Update student Id :",id);
-    navigate('/$id');
+   navigate(`/students/${id}/edit`);
 }
 
 const handleDelete=(id:string)=>{
