@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4000",allowedHeaders = "*")
 public class StudentController {
     @Autowired
     private StudentService studentService;
