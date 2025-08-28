@@ -4,8 +4,8 @@ import  './loginForm.css';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { AuthenticateResponse } from "../../models/common.models";
 import { useNavigate } from "react-router-dom";
-//import schoollogo from '../../../assets/logos/schoollogo.png';
-const logo = require('../../../assets/logos/schoollogo.png');
+import logo from '../../../assets/logos/schoollogo.png';
+//const logo = require('../../../assets/logos/schoollogo.png');
 
 
 
@@ -39,7 +39,8 @@ const LoginForm = () => {
          console.log(response.message);
     
    
-    navigate('/studentregistration');
+    //navigate('/studentregistration');
+    navigate('/headerTab');
 }
 else
 {

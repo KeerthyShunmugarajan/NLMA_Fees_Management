@@ -1,0 +1,102 @@
+/* General container */
+.stu-form-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fdfdfd;
+  border-radius: 16px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Heading */
+.stu-form-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Accordion styling */
+.MuiAccordion-root {
+  margin-bottom: 12px;
+  border-radius: 12px !important;
+  overflow: hidden;
+  background-color: #fafafa;
+  border: 1px solid #e0e0e0;
+}
+
+.MuiAccordionSummary-root {
+  background-color: #e3f2fd;
+  padding: 8px 16px;
+}
+
+.MuiAccordionSummary-content {
+  font-weight: bold;
+  color: #1565c0;
+}
+
+/* Input fields */
+.MuiTextField-root {
+  margin-bottom: 16px !important;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.MuiFormControl-root {
+  margin-bottom: 16px !important;
+}
+
+/* Buttons section */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.form-actions button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form-actions button:hover {
+  background-color: #0d47a1;
+}
+
+/* Update/Right panel */
+.update-panel {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f0f4ff;
+  border-radius: 12px;
+  border: 1px solid #d0d8ff;
+}
+
+.update-panel p {
+  font-weight: bold;
+  color: #1565c0;
+  margin-bottom: 10px;
+}
+
+.update-panel input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 5px 0;
+}
+
+.update-panel button {
+  margin-left: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  cursor: pointer;
+}
+

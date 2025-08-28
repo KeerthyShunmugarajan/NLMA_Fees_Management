@@ -1,0 +1,45 @@
+
+
+{
+  "tabs": [
+    {
+      "key": "studentDetails",
+      "name": "Student Details",
+      "roles": ["admin", "accountant","teachers"],
+      "component": "studentDetails",
+      "order": 1
+    },
+    {
+      "key": "studentRegistration",
+      "name": "Student Registration",
+      "roles": ["admin", "accountant"],
+      "component": "studentRegistration",
+      "order": 2
+    },
+    {
+      "key": "feeManagement",
+      "name": "Fee Management",
+      "roles": ["admin"],
+      "component": "feeManagement",
+      "childTabs":[
+        {"name":"Transport Fee Management",
+        "childComponent_key":"transportEntry"},
+        {"name":"Fee Management",
+        "childComponent_key":"feeEntry"},
+        
+        {"name":"CoCurricular Fee Management",
+        "childComponent_key":"cocurricularEntry"},
+        {"name":"Uniform Fee Management",
+        "childComponent_key":"uniformfeeEntry"}
+      ],
+      "order": 3
+    },
+    {
+      "key": "dashboard",
+      "name": "Dashboard",
+      "roles": ["admin", "teachers"],
+      "component": "dashboard",
+      "order": 4
+    }
+  ]
+}
