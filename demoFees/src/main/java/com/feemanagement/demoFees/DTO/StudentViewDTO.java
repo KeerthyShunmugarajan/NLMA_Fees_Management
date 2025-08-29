@@ -15,7 +15,7 @@ public class StudentViewDTO {
     private String studentId;
     private String name;
     //private int rollNo;
-    private int grade;
+    private String grade;
     //private String section;
     private String contactNumber;
     private String email;
