@@ -25,7 +25,7 @@ public class Student {
     @Column
     @Min(value = 1, message = "Grade must be at least 1")
     @Max(value = 12, message = "Grade cannot be more than 12")
-    private int grade;
+    private String grade;
 
     private String section;
 

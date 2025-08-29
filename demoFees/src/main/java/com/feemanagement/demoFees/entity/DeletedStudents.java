@@ -20,7 +20,7 @@ public class DeletedStudents {
 
     private String name;
     private String email;
-    private int grade;
+    private String grade;
     private String section;
     private int rollNo;
     private String contactNumber;
