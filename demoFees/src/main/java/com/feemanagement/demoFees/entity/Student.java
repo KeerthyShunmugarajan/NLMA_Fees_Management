@@ -23,9 +23,8 @@ public class Student {
 
     private int rollNo;
     @Column
-
-    //@Min(value = 1, message = "Grade must be at least 1")
-    //@Max(value = 12, message = "Grade cannot be more than 12")
+//    @Min(value = 1, message = "Grade must be at least 1")
+//    @Max(value = 12, message = "Grade cannot be more than 12")
     private String grade;
 
     private String section;
