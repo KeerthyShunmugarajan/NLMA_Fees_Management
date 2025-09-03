@@ -20,7 +20,7 @@ public class NewStudentDTO {
     @NotBlank(message ="Name cannot be empty")
     @ColumnTransformer(write = "UPPER(?)")
     private String name;
-
+    private Long appNumber;
     private int rollNo;
 //    @Column
 //    @Min(value = 1, message = "Grade must be at least 1")

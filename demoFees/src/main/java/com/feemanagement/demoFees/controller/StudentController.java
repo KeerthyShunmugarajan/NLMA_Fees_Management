@@ -1,5 +1,6 @@
 package com.feemanagement.demoFees.controller;
 
+import com.feemanagement.demoFees.DTO.IDGenerateDTO;
 import com.feemanagement.demoFees.DTO.NewStudentDTO;
 import com.feemanagement.demoFees.DTO.StudentUpdateDTO;
 import com.feemanagement.demoFees.DTO.StudentViewDTO;
@@ -43,10 +44,10 @@ public class StudentController {
     }
 
     @GetMapping("/students/newid")
-    public ResponseEntity<String> generateStudentID(){
-        String newId =studentService.generateStudentId();
+    public ResponseEntity<IDGenerateDTO> generateStudentID(){
+        IDGenerateDTO response =studentService.generateStudentId();
         //System.out.println((newId));
-        return  ResponseEntity.ok(newId);
+        return  ResponseEntity.ok(response);
     }
 
     //Get student data by ID

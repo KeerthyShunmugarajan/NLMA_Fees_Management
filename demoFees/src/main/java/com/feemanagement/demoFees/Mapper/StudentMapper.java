@@ -13,7 +13,7 @@ public class StudentMapper {
 
     public static StudentViewDTO mapToStudentViewDTO(Student student) {
         StudentViewDTO studentViewDTO = new StudentViewDTO();
-        //studentViewDTO.setAppNumber(student.getAppNumber());
+        studentViewDTO.setAppNumber(student.getAppNumber());
         studentViewDTO.setStudentId(student.getStudentId());
         studentViewDTO.setName(student.getName());
         studentViewDTO.setContactNumber(student.getContactNumber());
@@ -39,7 +39,7 @@ public class StudentMapper {
     //MAPPING TO ORGINAL STUDENT ENTITY
     public static Student mapToStudentEntity(NewStudentDTO studentDTO) {
         Student student = new Student();
-        //student.setAppNumber(studentDTO.getAppNumber());
+        student.setAppNumber(studentDTO.getAppNumber());
         //student.setStudentId(studentDTO.getStudentId());
         student.setName(studentDTO.getName());
         student.setRollNo(studentDTO.getRollNo());
