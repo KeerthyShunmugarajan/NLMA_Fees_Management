@@ -21,7 +21,7 @@ public class NewStudentDTO {
     @ColumnTransformer(write = "UPPER(?)")
     private String name;
 
- //   private int rollNo;
+    private int rollNo;
 //    @Column
 //    @Min(value = 1, message = "Grade must be at least 1")
 //    @Max(value = 12, message = "Grade cannot be more than 12")
