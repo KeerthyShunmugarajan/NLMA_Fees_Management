@@ -3,14 +3,15 @@ import { Accordion, AccordionSummary, AccordionDetails, Typography, TextField, F
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Grid";
 import './StudentRegistrationForm.css';
-import { data, useParams } from "react-router-dom";
-import { fetchStudentbyId } from "../../service/ListStudentDetailsService";
+import { useParams } from "react-router-dom";
+import { fetchStudentbyId, fetchStudentId } from "../../service/ListStudentDetailsService";
 import { Student } from "../../models/student.model";
 
 
 const StudentRegistrationForm = () => {
   const { id } = useParams<{ id: string }>();
   const [formData, setFormData] = useState<Student | null>(null);
+  const [newStudentId,setNewStudentId]=useState<string|null>(null);
   console.log("id from URL:" + id);
 
   useEffect(() => {
@@ -21,6 +22,15 @@ const StudentRegistrationForm = () => {
         setFormData(studentbyID);
       };
       loadStudentbyId();
+    }
+    else{
+      const loadStudentId = async()=>{
+        const studentId = await fetchStudentId();
+        console.log(studentId);
+        setNewStudentId(studentId);
+
+      };
+      loadStudentId();
     };
 
   }, [id]);
@@ -46,7 +56,7 @@ const StudentRegistrationForm = () => {
               <TextField label="Application Number" variant="outlined" size="small" fullWidth />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField id="studentId" label="Student ID" variant="outlined" size="small" fullWidth disabled value={formData?.studentId} />
+              <TextField id="studentId" label="Student ID" name="studentId" variant="outlined" size="small" fullWidth disabled value={id?formData?.studentId:newStudentId} InputLabelProps={{ shrink: true }} />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <TextField label="Date of Joining" fullWidth type="date" InputLabelProps={{ shrink: true }} variant="outlined" size="small" />
@@ -69,7 +79,7 @@ const StudentRegistrationForm = () => {
           <Grid container spacing={2}>
             {/* Name: First & Last */}
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="First Name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }} value={formData?.name} />
+              <TextField label="First Name" name="name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }} value={formData?.name} />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <TextField label="Last Name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }} value={formData?.name} />
@@ -82,7 +92,7 @@ const StudentRegistrationForm = () => {
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <FormControl component="fieldset" fullWidth>
                 <FormLabel component="legend" sx={{ fontSize: "0.9rem", mb: 0.5, typography: "body2" }} >Gender</FormLabel>
-                <RadioGroup row>
+                <RadioGroup name="gender" value={formData?.gender} row>
                   <FormControlLabel value="Male" control={<Radio size="small" />} label="Male" />
                   <FormControlLabel value="Female" control={<Radio size="small" />} label="Female" />
                 </RadioGroup>
@@ -91,9 +101,9 @@ const StudentRegistrationForm = () => {
 
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <FormControl variant="outlined" size="small" fullWidth>
-                <InputLabel id="class-select-label">Class</InputLabel>
-                <Select labelId="class-select-label" defaultValue="">
-                  <MenuItem value=""><em>Select Class</em></MenuItem>
+                <InputLabel id="class-select-label">Grade</InputLabel>
+                <Select name="grade" labelId="class-select-label" defaultValue="">
+                  <MenuItem value=""><em>Select Grade</em></MenuItem>
                   {/* Add more MenuItems as needed */}
                 </Select>
               </FormControl>
@@ -135,17 +145,20 @@ const StudentRegistrationForm = () => {
 
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Town" variant="outlined" size="small" />
+              <TextField label="Town" name="town" variant="outlined" size="small" />
 
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="State" variant="outlined" size="small" />
+              <TextField label="State" name="state" variant="outlined" size="small" />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Pincode" variant="outlined" size="small" />
+              <TextField label="Pincode" name="pincode" variant="outlined" size="small" />
             </Grid>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Student Contact number" variant="outlined" size="small" />
+              <TextField label="Student Contact number" name="contactNumber" variant="outlined" size="small" />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+              <TextField label="E-mail" name="email" variant="outlined" size="small" />
             </Grid>
           </Grid>
         </AccordionDetails>
