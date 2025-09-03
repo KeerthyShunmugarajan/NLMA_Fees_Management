@@ -11,7 +11,7 @@ import tabsDatajson from "./tabStructure.json";
 
 
 const HeaderTab = () => {
-    const userRole = "admin"; // get this from auth context or API
+    //const userRole = "admin"; // get this from auth context or API
     return (
         <div>
             <header className="tab-head">
