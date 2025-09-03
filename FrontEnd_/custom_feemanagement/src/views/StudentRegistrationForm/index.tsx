@@ -6,13 +6,53 @@ import './StudentRegistrationForm.css';
 import { useParams } from "react-router-dom";
 import { fetchStudentbyId, fetchStudentId } from "../../service/ListStudentDetailsService";
 import { Student } from "../../models/student.model";
+import { IdGeneration } from "../../models/idGeneration.models";
 
 
 const StudentRegistrationForm = () => {
   const { id } = useParams<{ id: string }>();
-  const [formData, setFormData] = useState<Student | null>(null);
-  const [newStudentId,setNewStudentId]=useState<string|null>(null);
+  const [formData, setFormData] = useState<Student | null>({
+    studentId: "", name: "", grade: "", contactNumber: "", email: "",
+    admissionDate: "", gender: ""
+  });
+  const [newStudentRec, setNewStudentRec] = useState<IdGeneration | null>(null);
   console.log("id from URL:" + id);
+
+  // const [formData, setFormData] = useState<Student|null>({
+  //   studentId: "",
+  //   firstName: "",
+  //   lastName: "",
+  //   dob: "",
+  //   gender: "",
+  //   class: "",
+  //   nationality: "",
+  //   religion: "",
+  //   caste: "",
+  //   aadharNo: "",
+  //   address1: "",
+  //   address2: "",
+  //   town: "",
+  //   state: "",
+  //   pincode: "",
+  //   studentContact: "",
+  //   fatherName: "",
+  //   fatherOccupation: "",
+  //   fatherEducation: "",
+  //   fatherContact: "",
+  //   motherName: "",
+  //   motherOccupation: "",
+  //   motherEducation: "",
+  //   motherContact: "",
+  //   guardianName: "",
+  //   guardianOccupation: "",
+  //   guardianContact: "",
+  //   prevSchool: "",
+  //   interests: "",
+  //   referral: "",
+  //   comments: ""
+  // });
+
+
 
   useEffect(() => {
     if (id) {
@@ -23,17 +63,32 @@ const StudentRegistrationForm = () => {
       };
       loadStudentbyId();
     }
-    else{
-      const loadStudentId = async()=>{
+    else {
+      const loadStudentId = async () => {
         const studentId = await fetchStudentId();
         console.log(studentId);
-        setNewStudentId(studentId);
+        console.log("return:", { studentId });
+        setNewStudentRec(studentId);
 
       };
       loadStudentId();
     };
 
   }, [id]);
+  //generic input change handler:
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  //form submittion
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("submitting data:", formData);
+
+     // call your backend API ?????
+  };
+
   return (
     <div className="stu-form-container">
       <h2>{id ? "Update Student Record" : "New Student Registration"}</h2>
@@ -45,200 +100,203 @@ const StudentRegistrationForm = () => {
       {/* <Typography variant="h4" align="center" gutterBottom>
         {id?"Update Student Details":"Student Registration Form"}
       </Typography> */}
-      {/* Office Details */}
-      <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography align="center" >Office Details</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Grid container spacing={2}>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Application Number" variant="outlined" size="small" fullWidth />
+
+      <form onSubmit={handleSubmit}>
+        {/* Office Details */}
+        <Accordion defaultExpanded>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography align="center" >Office Details</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Application Number" name="appNumber" variant="outlined" size="small" fullWidth disabled value={id ? formData?.studentId : newStudentRec?.appNumber} InputLabelProps={{ shrink: true }} />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField id="studentId" label="Student ID" name="studentId" variant="outlined" size="small" fullWidth disabled value={id ? formData?.studentId : newStudentRec?.studentID} InputLabelProps={{ shrink: true }} />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Date of Joining" fullWidth type="date" InputLabelProps={{ shrink: true }} variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Registration Date" fullWidth disabled value={new Date().toLocaleDateString()} variant="outlined" size="small" />
+              </Grid>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField id="studentId" label="Student ID" name="studentId" variant="outlined" size="small" fullWidth disabled value={id?formData?.studentId:newStudentId} InputLabelProps={{ shrink: true }} />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Date of Joining" fullWidth type="date" InputLabelProps={{ shrink: true }} variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Registration Date" fullWidth disabled value={new Date().toLocaleDateString()} variant="outlined" size="small" />
-            </Grid>
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
+          </AccordionDetails>
+        </Accordion>
 
 
-      {/* Student Details */}
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Student Details</Typography>
-        </AccordionSummary>
+        {/* Student Details */}
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Student Details</Typography>
+          </AccordionSummary>
 
-        <AccordionDetails>
-          <Grid container spacing={2}>
-            {/* Name: First & Last */}
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="First Name" name="name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }} value={formData?.name} />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Last Name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }} value={formData?.name} />
-            </Grid>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              {/* Name: First & Last */}
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="First Name" name="name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }} value={formData?.name} onChange={handleChange}/>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Last Name" variant="outlined" size="small" fullWidth InputLabelProps={{ shrink: true }} value={formData?.name} />
+              </Grid>
 
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Date of Birth" type="date" InputLabelProps={{ shrink: true }} variant="outlined" size="small" fullWidth />
-            </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Date of Birth" type="date" InputLabelProps={{ shrink: true }} variant="outlined" size="small" fullWidth />
+              </Grid>
 
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <FormControl component="fieldset" fullWidth>
-                <FormLabel component="legend" sx={{ fontSize: "0.9rem", mb: 0.5, typography: "body2" }} >Gender</FormLabel>
-                <RadioGroup name="gender" value={formData?.gender} row>
-                  <FormControlLabel value="Male" control={<Radio size="small" />} label="Male" />
-                  <FormControlLabel value="Female" control={<Radio size="small" />} label="Female" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <FormControl component="fieldset" fullWidth>
+                  <FormLabel component="legend" sx={{ fontSize: "0.9rem", mb: 0.5, typography: "body2" }} >Gender</FormLabel>
+                  <RadioGroup name="gender" value={formData?.gender} onChange={handleChange}row>
+                    <FormControlLabel value="Male" control={<Radio size="small" />} label="Male" />
+                    <FormControlLabel value="Female" control={<Radio size="small" />} label="Female" />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
 
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <FormControl variant="outlined" size="small" fullWidth>
-                <InputLabel id="class-select-label">Grade</InputLabel>
-                <Select name="grade" labelId="class-select-label" defaultValue="">
-                  <MenuItem value=""><em>Select Grade</em></MenuItem>
-                  {/* Add more MenuItems as needed */}
-                </Select>
-              </FormControl>
-            </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <FormControl variant="outlined" size="small" fullWidth>
+                  <InputLabel id="class-select-label">Grade</InputLabel>
+                  <Select name="grade" labelId="class-select-label" defaultValue="">
+                    <MenuItem value=""><em>Select Grade</em></MenuItem>
+                    {/* Add more MenuItems as needed */}
+                  </Select>
+                </FormControl>
+              </Grid>
 
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} >
-              <TextField label="Nationality" variant="outlined" size="small" fullWidth />
-            </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} >
+                <TextField label="Nationality" variant="outlined" size="small" fullWidth />
+              </Grid>
 
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Religion" variant="outlined" size="small" fullWidth />
-            </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Religion" variant="outlined" size="small" fullWidth />
+              </Grid>
 
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Caste" variant="outlined" size="small" fullWidth />
-            </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Caste" variant="outlined" size="small" fullWidth />
+              </Grid>
 
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Aadhar No" variant="outlined" size="small" fullWidth />
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Aadhar No" variant="outlined" size="small" fullWidth />
+              </Grid>
             </Grid>
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
+          </AccordionDetails>
+        </Accordion>
 
-      {/* Contact Details */}
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>
-            <legend>Contact Details</legend>
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Grid container spacing={2}>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Address Line 1" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Address Line 2" variant="outlined" size="small" />
+        {/* Contact Details */}
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>
+              <legend>Contact Details</legend>
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Address Line 1" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Address Line 2" variant="outlined" size="small" />
 
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Town" name="town" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Town" name="town" variant="outlined" size="small" />
 
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="State" name="state" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Pincode" name="pincode" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Student Contact number" name="contactNumber" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="E-mail" name="email" variant="outlined" size="small" />
+              </Grid>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="State" name="state" variant="outlined" size="small" />
+          </AccordionDetails>
+        </Accordion>
+        {/*Parent's Details */}
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>
+              <legend>Parent Details</legend>
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Father Name" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Father's Occupation" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Father's Highest Education" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Father's Contact" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Mother's Name" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Mother's Occupation" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Mother's Highest Education" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Mother's Contact" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Guardian's Name (If applicable)" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Guardian's Occupation" variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Guardian's contact" variant="outlined" size="small" />
+              </Grid>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Pincode" name="pincode" variant="outlined" size="small" />
+          </AccordionDetails>
+        </Accordion>
+        {/*Additional Information*/}
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>
+              <legend>Additional Information</legend>
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Prev. School if any" fullWidth variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Specific Areas of Interest" fullWidth variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="How did you know about NLMA?" fullWidth variant="outlined" size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <TextField label="Comments" fullWidth variant="outlined" size="small" />
+              </Grid>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Student Contact number" name="contactNumber" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="E-mail" name="email" variant="outlined" size="small" />
-            </Grid>
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
-      {/*Parent's Details */}
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>
-            <legend>Parent Details</legend>
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Grid container spacing={2}>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Father Name" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Father's Occupation" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Father's Highest Education" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Father's Contact" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Mother's Name" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Mother's Occupation" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Mother's Highest Education" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Mother's Contact" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Guardian's Name (If applicable)" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Guardian's Occupation" variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Guardian's contact" variant="outlined" size="small" />
-            </Grid>
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
-      {/*Additional Information*/}
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>
-            <legend>Additional Information</legend>
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Grid container spacing={2}>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Prev. School if any" fullWidth variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Specific Areas of Interest" fullWidth variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="How did you know about NLMA?" fullWidth variant="outlined" size="small" />
-            </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-              <TextField label="Comments" fullWidth variant="outlined" size="small" />
-            </Grid>
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
-
-      {/* Right Panel */}
-      <div>
+          </AccordionDetails>
+        </Accordion>
         <div className="form-actions">
           <button>Add</button>
           <button>Reset</button>
         </div>
+      </form>
+      {/* Right Panel */}
+      <div>
+
         <div className="update-panel">
           <p>Update Student Record</p>
           <label><input type="radio" name="update" /> Yes</label>
@@ -253,3 +311,4 @@ const StudentRegistrationForm = () => {
   );
 };
 export default StudentRegistrationForm;
+

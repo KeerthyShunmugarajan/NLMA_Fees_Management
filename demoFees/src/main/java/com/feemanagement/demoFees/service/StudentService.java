@@ -1,5 +1,6 @@
 package com.feemanagement.demoFees.service;
 
+import com.feemanagement.demoFees.DTO.IDGenerateDTO;
 import com.feemanagement.demoFees.DTO.NewStudentDTO;
 import com.feemanagement.demoFees.DTO.StudentUpdateDTO;
 import com.feemanagement.demoFees.DTO.StudentViewDTO;
@@ -38,7 +39,7 @@ private StudentMapper studentMapper;
     //create students
     public ResponseEntity<Map<String, String>> createStudentData(NewStudentDTO newstudentdto) {
         Student student = studentMapper.mapToStudentEntity(newstudentdto);
-        String newStudentId = generateStudentId();
+        String newStudentId = generateStudentId().getStudentID();
         System.out.println("New ID Generated =" +newStudentId);
         student.setStudentId(newStudentId);
         Student studentData = studentRepository.save(student);
@@ -51,13 +52,13 @@ private StudentMapper studentMapper;
         return ResponseEntity.ok(response);
     }
 
-    public String generateStudentId() {
+    public IDGenerateDTO generateStudentId() {
         String schoolCode = "NLMA";
         String year = String.valueOf(LocalDate.now().getYear());
-        Long latestAppNum = studentRepository.getLatestAppNumber().orElse(0L);
-        Long appNumIncrement = 10000 + latestAppNum + 1;
+        Long latestAppNum = studentRepository.getLatestAppNumber().orElse(0L)+1;
+        Long appNumIncrement = 10000 + latestAppNum;
         String newStudentId = schoolCode.concat(String.valueOf(appNumIncrement)).concat(year);
-        return newStudentId;
+        return new IDGenerateDTO(newStudentId,latestAppNum);
     }
 
    //Fetch all students record
