@@ -42,6 +42,13 @@ public class StudentController {
         return studentService.getStudentData();
     }
 
+    @GetMapping("/students/newid")
+    public ResponseEntity<String> generateStudentID(){
+        String newId =studentService.generateStudentId();
+        //System.out.println((newId));
+        return  ResponseEntity.ok(newId);
+    }
+
     //Get student data by ID
     @GetMapping("/students/{id}")
     public StudentViewDTO getStudentDataByIdController(@PathVariable("id") String id) {

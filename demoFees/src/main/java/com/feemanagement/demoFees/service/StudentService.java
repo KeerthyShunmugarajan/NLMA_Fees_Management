@@ -51,7 +51,7 @@ private StudentMapper studentMapper;
         return ResponseEntity.ok(response);
     }
 
-    private String generateStudentId() {
+    public String generateStudentId() {
         String schoolCode = "NLMA";
         String year = String.valueOf(LocalDate.now().getYear());
         Long latestAppNum = studentRepository.getLatestAppNumber().orElse(0L);

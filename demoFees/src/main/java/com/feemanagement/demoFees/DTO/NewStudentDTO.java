@@ -21,7 +21,7 @@ public class NewStudentDTO {
     @ColumnTransformer(write = "UPPER(?)")
     private String name;
 
-    private int rollNo;
+ //   private int rollNo;
 //    @Column
 //    @Min(value = 1, message = "Grade must be at least 1")
 //    @Max(value = 12, message = "Grade cannot be more than 12")
@@ -31,4 +31,40 @@ public class NewStudentDTO {
     private String contactNumber;
     @Email(message = "Enter proper email format")
     private String email;
+    private LocalDate admissionDate;
+    //Need to be included
+
+    private LocalDate dateOfRegistration;
+    private String gender;
+    private LocalDate dateOfBirth;
+    private String nationality;
+    private String religion;
+    private String caste;
+    private String aadharNumber;
+
+    private String address1;
+    private String address2;
+    private String town;
+    private String state;
+    private Long pincode;
+    //private Long studentContact;
+
+    private String fathersName;
+    private String fathersOccupation;
+    private String fathersHighestEducation;
+    private String fathersContact;
+
+    private String mothersName;
+    private String mothersOccupation;
+    private String mothersHighestEducation;
+    private String mothersContact;
+
+    private String guardiansName;
+    private String guardiansOccupation;
+    private String guardiansContact;
+
+    private String previousSchool;
+    private String areaOfInterest;
+    private String description;
+    private String comments;
 }
