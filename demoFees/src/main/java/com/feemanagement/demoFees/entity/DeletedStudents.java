@@ -17,7 +17,6 @@ public class DeletedStudents {
     private Long deletedId;
 
     private String studentId;
-
     private String name;
     private String email;
     private String grade;
