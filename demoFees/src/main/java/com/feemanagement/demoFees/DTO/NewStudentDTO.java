@@ -22,6 +22,9 @@ public class NewStudentDTO {
     private String name;
     private Long appNumber;
     private int rollNo;
+
+
+    private String status;
 //    @Column
 //    @Min(value = 1, message = "Grade must be at least 1")
 //    @Max(value = 12, message = "Grade cannot be more than 12")

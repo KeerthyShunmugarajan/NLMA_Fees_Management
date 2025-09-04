@@ -33,43 +33,42 @@ public class StudentService {
     @Autowired
     private DeletedStudentRepository deletedStudentRepository;
 
-@Autowired
-private StudentMapper studentMapper;
+    @Autowired
+    private StudentMapper studentMapper;
 
     //create students
     public ResponseEntity<Map<String, String>> createStudentData(NewStudentDTO newstudentdto) {
         Student student = studentMapper.mapToStudentEntity(newstudentdto);
         String newStudentId = generateStudentId().getStudentID();
-        System.out.println("New ID Generated =" +newStudentId);
+        System.out.println("New ID Generated =" + newStudentId);
         student.setStudentId(newStudentId);
         Student studentData = studentRepository.save(student);
 
         studentRepository.save(studentData);
 
-        Map<String,String> response = new HashMap<>();
-        response.put("Message","New Student record created");
-        response.put("ID",studentData.getStudentId());
+        Map<String, String> response = new HashMap<>();
+        response.put("Message", "New Student record created");
+        response.put("ID", studentData.getStudentId());
         return ResponseEntity.ok(response);
     }
 
     public IDGenerateDTO generateStudentId() {
         String schoolCode = "NLMA";
         String year = String.valueOf(LocalDate.now().getYear());
-        Long latestAppNum = studentRepository.getLatestAppNumber().orElse(0L)+1;
+        Long latestAppNum = studentRepository.getLatestAppNumber().orElse(0L) + 1;
         Long appNumIncrement = 10000 + latestAppNum;
         String newStudentId = schoolCode.concat(String.valueOf(appNumIncrement)).concat(year);
-        return new IDGenerateDTO(newStudentId,latestAppNum);
+        return new IDGenerateDTO(newStudentId, latestAppNum);
     }
 
-   //Fetch all students record
-    public ResponseEntity<?> getStudentData(){
+    //Fetch all students record
+    public ResponseEntity<?> getStudentData() {
         List<Student> students = studentRepository.findAll();
-        if(students.isEmpty()){
-            Map<String,String> response = new HashMap<>();
-            response.put("message","No Records Found");
+        if (students.isEmpty()) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "No Records Found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-         }
-        else {
+        } else {
             return ResponseEntity.ok(students);
         }
     }
@@ -82,7 +81,7 @@ private StudentMapper studentMapper;
     }
 
     //update students by id
-    public ResponseEntity<Map<String,Object>> updateStudentData(String id, @NotNull StudentUpdateDTO updatedStudent) {
+    public ResponseEntity<Map<String, Object>> updateStudentData(String id, @NotNull StudentUpdateDTO updatedStudent) {
 
         Student oldStudentData = studentRepository.findStudentDataById(id).orElseThrow(() ->
                 new StudentDoesNotExistsException("Student with Id " + id + " does not exists"));
@@ -95,9 +94,9 @@ private StudentMapper studentMapper;
 
         StudentUpdateDTO studentUpdateDTO = studentMapper.mapToStudentUpdateDTO(updated);
 
-        Map<String,Object> response = new HashMap<>();
-        response.put("message","Student record updated");
-        response.put("student",studentUpdateDTO);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Student record updated");
+        response.put("student", studentUpdateDTO);
         return ResponseEntity.ok(response);
 
         // HOW TO ADD MAPPER UTILS
@@ -105,9 +104,9 @@ private StudentMapper studentMapper;
 
 
     //delete the students and move to another table
-    public ResponseEntity<Map<String,String>> deleteStudentRecordByID(String id,String reason){
+    public ResponseEntity<Map<String, String>> deleteStudentRecordByID(String id, String reason) {
         Student studentRec = studentRepository.findStudentDataById(id).orElseThrow(
-                ()->new StudentDoesNotExistsException("Student with id "+id+" does not exists."));
+                () -> new StudentDoesNotExistsException("Student with id " + id + " does not exists."));
         DeletedStudents deletedStudentData = new DeletedStudents();
 
         deletedStudentData.setStudentId(studentRec.getStudentId());
@@ -125,8 +124,8 @@ private StudentMapper studentMapper;
         //studentRepository.delete(studentRec);
         studentRepository.delete(studentRec);
 
-        Map<String,String> response = new HashMap<>();
-        response.put("message","Student deleted and archived successfully");
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student deleted and archived successfully");
         return ResponseEntity.ok(response);
 
     }
