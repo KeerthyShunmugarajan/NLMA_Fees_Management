@@ -6,4 +6,5 @@ export interface Student{
   email?: string;
   admissionDate?: string;
   gender?:string;
+  registrationDate?:string;
 }
