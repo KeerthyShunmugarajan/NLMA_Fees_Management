@@ -15,6 +15,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appNumber;
 
+    private String status;
     private String studentId;
 
     @NotBlank(message ="Name cannot be empty")

@@ -1,0 +1,49 @@
+{
+    "grades": [
+        {
+            "id": "0",
+            "name": "Select Grade",
+            "fee": 0
+        },
+        {
+            "id": "1",
+            "name": "LKG",
+            "fee": 15000
+        },
+        {
+            "id": "2",
+            "name": "UKG",
+            "fee": 15000
+        },
+        {
+            "id": "3",
+            "name": "Grade 1",
+            "fee": 15000
+        },
+        {
+            "id": "4",
+            "name": "Grade 2",
+            "fee": 15000
+        },
+        {
+            "id": "5",
+            "name": "Grade 3",
+            "fee": 15000
+        },
+        {
+            "id": "6",
+            "name": "Grade 4",
+            "fee": 15000
+        },
+        {
+            "id": "7",
+            "name": "Grade 5",
+            "fee": 15000
+        },
+        {
+            "id": "8",
+            "name": "Grade 6",
+            "fee": 15000
+        }
+    ]
+}

@@ -20,6 +20,9 @@ public class StudentUpdateDTO {
     @NotBlank(message ="Name cannot be empty")
     @ColumnTransformer(write = "UPPER(?)")
     private String name;
+    private String gender;
+    private String grade;
+    private String status;
 
     @Pattern(regexp = "\\d{10}",message = "Please enter the correct phone number")
     private String contactNumber;
