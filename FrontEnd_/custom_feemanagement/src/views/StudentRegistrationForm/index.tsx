@@ -5,66 +5,35 @@ import Grid from "@mui/material/Grid";
 import './StudentRegistrationForm.css';
 import { useParams } from "react-router-dom";
 import { fetchStudentbyId, fetchStudentId } from "../../service/ListStudentDetailsService";
-import { Student } from "../../models/student.model";
+import { getEmptyStudent, Student } from "../../models/student.model";
 import { IdGeneration } from "../../models/idGeneration.models";
+
 import gradesJSON from "./grades.json"
+import createStudent from "../../service/CreateStudentService";
+import { error } from "console";
 
 
-const StudentRegistrationForm = () => {
-  const { id } = useParams<{ id: string }>();
-  const [formData, setFormData] = useState<Student | null>({
-    studentId: "", name: "", grade: "", contactNumber: "", email: "",
-    admissionDate: "", gender: "",registrationDate:new Date().toLocaleDateString()
-  });
-  const [newStudentRec, setNewStudentRec] = useState<IdGeneration | null>(null);
+const StudentRegistrationForm:React.FC = () => {
+  const { id } = useParams<{ id?: string }>();
+    // Form state: always a Student (never null)
+  const [formData, setFormData] = useState<Student>(getEmptyStudent());
+  const [isSubmitted, setIsSubmitted] = useState(false);
+   const [newStudentRec, setNewStudentRec] = useState<IdGeneration | null>(null);
   console.log("id from URL:" + id);
 
-  // const [formData, setFormData] = useState<Student|null>({
-  //   studentId: "",
-  //   firstName: "",
-  //   lastName: "",
-  //   dob: "",
-  //   gender: "",
-  //   class: "",
-  //   nationality: "",
-  //   religion: "",
-  //   caste: "",
-  //   aadharNo: "",
-  //   address1: "",
-  //   address2: "",
-  //   town: "",
-  //   state: "",
-  //   pincode: "",
-  //   studentContact: "",
-  //   fatherName: "",
-  //   fatherOccupation: "",
-  //   fatherEducation: "",
-  //   fatherContact: "",
-  //   motherName: "",
-  //   motherOccupation: "",
-  //   motherEducation: "",
-  //   motherContact: "",
-  //   guardianName: "",
-  //   guardianOccupation: "",
-  //   guardianContact: "",
-  //   prevSchool: "",
-  //   interests: "",
-  //   referral: "",
-  //   comments: ""
-  // });
-
-
-
+// Load student or initialize for new record
   useEffect(() => {
     if (id) {
+      // Edit mode: load student by ID
       const loadStudentbyId = async () => {
         const studentbyID = await fetchStudentbyId(id);
         console.log(studentbyID);
-        setFormData(studentbyID);
+        setFormData(studentbyID??getEmptyStudent());
       };
       loadStudentbyId();
     }
     else {
+       // Create mode: generate new student ID only for display, backend will look after tht
       const loadStudentId = async () => {
         const studentId = await fetchStudentId();
         console.log(studentId);
@@ -90,10 +59,22 @@ const StudentRegistrationForm = () => {
   //form submittion
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("submitting data:", formData);
-
     // call your backend API ?????
+    console.log("submitting data:", formData);
+    try{
+      await createStudent(formData);
+      setIsSubmitted(true);
+    }
+    catch(err){
+      console.error("Submission Failed!",err);
+    }
   };
+  useEffect(() => {
+  if (isSubmitted) {
+    // do something after success
+    console.log("Form successfully submitted!");
+  }
+}, [isSubmitted]);
 
   return (
     <div className="stu-form-container">

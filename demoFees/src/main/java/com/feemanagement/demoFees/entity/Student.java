@@ -12,7 +12,12 @@ import java.time.LocalDate;
 @Table(name = "STUDENT_DETAILS")
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_seq")
+    @SequenceGenerator(
+            name = "student_seq",                        // Hibernate name
+            sequenceName = "STUDENT_DETAILS_APP_NUMBER_SEQ", // DB sequence name
+            allocationSize = 1                           // must be 1 for H2, otherwise Hibernate prefetches 50
+    )
     private Long appNumber;
 
     private String status;
