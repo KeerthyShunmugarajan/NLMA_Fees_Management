@@ -4,12 +4,16 @@ import com.feemanagement.demoFees.DTO.IDGenerateDTO;
 import com.feemanagement.demoFees.DTO.NewStudentDTO;
 import com.feemanagement.demoFees.DTO.StudentUpdateDTO;
 import com.feemanagement.demoFees.DTO.StudentViewDTO;
+import com.feemanagement.demoFees.entity.Student;
 import com.feemanagement.demoFees.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -41,6 +45,35 @@ public class StudentController {
     @GetMapping("/students")
     public ResponseEntity<?> getAllStudentsData() {
         return studentService.getStudentData();
+    }
+
+    @GetMapping("/students/page")
+    public ResponseEntity<?> getPagedActiveStudents(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String studentClass) {
+
+        Page<Student> studentsPage;
+        if(studentClass!=null && !studentClass.isEmpty()){
+            studentsPage = studentService.getStudentsByClass(page, size,studentClass);
+        }
+        else{
+            studentsPage= studentService.getPagedActiveStudents(page, size);
+        }
+        if (studentsPage.isEmpty()) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "No Records Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        Map<String, Object> response = Map.of(
+                "students", studentsPage.getContent(),
+                "currentPage", studentsPage.getNumber(),
+                "totalItems", studentsPage.getTotalElements(),
+                "totalPages", studentsPage.getTotalPages()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/students/newid")

@@ -13,6 +13,10 @@ import com.feemanagement.demoFees.repository.StudentRepository;
 import jakarta.validation.constraints.NotNull;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -60,10 +64,20 @@ public class StudentService {
         String newStudentId = schoolCode.concat(String.valueOf(appNumIncrement)).concat(year);
         return new IDGenerateDTO(newStudentId, latestAppNum);
     }
+    //Fetch all ACTIVE students record with pagination
+    public Page<Student> getPagedActiveStudents(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("name").ascending());
+        return studentRepository.findByStatus("ACTIVE", pageable);
+    }
+   public Page<Student> getStudentsByClass(int page,int size,String studentClass){
+        Pageable pageable=PageRequest.of(page,size);
+        return studentRepository.findByGradeAndStatus(studentClass,"ACTIVE",pageable);
 
-    //Fetch all students record
+   }
+    //Fetch all ACTIVE students record
     public ResponseEntity<?> getStudentData() {
-        List<Student> students = studentRepository.findAll();
+       // List<Student> students_all = studentRepository.findAll();
+        List<Student> students = studentRepository.findByStatus("ACTIVE");
         if (students.isEmpty()) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "No Records Found");
