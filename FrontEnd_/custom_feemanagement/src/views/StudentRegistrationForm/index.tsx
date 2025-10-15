@@ -10,7 +10,7 @@ import { IdGeneration } from "../../models/idGeneration.models";
 
 import gradesJSON from "./grades.json"
 import createStudent from "../../service/CreateStudentService";
-import { error } from "console";
+//import { error } from "console";
 
 
 const StudentRegistrationForm:React.FC = () => {
@@ -62,6 +62,7 @@ const StudentRegistrationForm:React.FC = () => {
     // call your backend API ?????
     console.log("submitting data:", formData);
     try{
+      //try spread operator..
       await createStudent(formData);
       setIsSubmitted(true);
     }

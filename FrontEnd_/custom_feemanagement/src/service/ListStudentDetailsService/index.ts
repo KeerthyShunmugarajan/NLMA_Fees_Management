@@ -16,6 +16,18 @@ const fetchStudents = async (): Promise<StudentDetailsResponse[]> => {
     }
 };
 
+const fetchStudentsPaginated = async (page: number, size: number,selectedClass:string): Promise<any> => {
+    const url = `${process.env.BASE_URL}${process.env.STUDENTDETAILS_ENDPOINT}/page?page=${page}&size=${size}&studentClass=${selectedClass}`;
+
+    try {
+        const response = await axios.get(url);
+        return response.data; // this contains { students, currentPage, totalPages, totalItems }
+    } catch (error) {
+        console.error("Error fetching paginated student details", error);
+        return { students: [], currentPage: 0, totalPages: 0, totalItems: 0 };
+    }
+};
+
 export const fetchStudentbyId = async (id: string): Promise<Student | null> => {
     const url = `${process.env.BASE_URL}${process.env.STUDENTDETAILS_ENDPOINT}/${id}`;
     try {
@@ -47,4 +59,4 @@ export const fetchStudentId = async (): Promise<IdGeneration | null> => {
 
 
 }
-export default fetchStudents;
+export default fetchStudentsPaginated;
