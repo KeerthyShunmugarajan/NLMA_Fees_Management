@@ -8,7 +8,7 @@ import StudentDetailsForm from "../StudentDetailsForm";
 
 const App = () => {
   console.log("NODE_ENV:", process.env.NODE_ENV);
-  console.log("BASE_URL:", process.env.BASE_URL);
+  // console.log("BASE_URL:", process.env.BASE_URL);
   const message = "Hello Frontend_Child"
   return (
 

@@ -4,6 +4,9 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+// import webpack from 'webpack';
+
+
 
 const config: Configuration = {
   mode: "production",
@@ -56,6 +59,14 @@ const config: Configuration = {
       extensions: ["js", "jsx", "ts", "tsx"],
     }),
     new CleanWebpackPlugin(),
+  //   new webpack.DefinePlugin({
+  //   "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL),
+  //   "process.env.ENDPOINT": JSON.stringify(process.env.ENDPOINT),
+  //   "process.env.AUTHENTICATION_ENDPOINT": JSON.stringify(process.env.AUTHENTICATION_ENDPOINT),
+  //   "process.env.STUDENTDETAILS_ENDPOINT": JSON.stringify(process.env.STUDENTDETAILS_ENDPOINT),
+  //   "process.env.STUDENTID_ENDPOINT": JSON.stringify(process.env.STUDENTID_ENDPOINT),
+  // }),
+
   ],
    // optional but nice for debugging your deployed code
   devtool: "source-map",
