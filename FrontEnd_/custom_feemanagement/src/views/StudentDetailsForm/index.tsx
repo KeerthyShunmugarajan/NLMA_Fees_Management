@@ -25,8 +25,8 @@ const StudentDetailsForm = () => {
     ];
 
     // Load students from backend
-    const loadStudents = async (page: number, studentClass?: string) => {
-        const data = await fetchStudentsPaginated(page, pageSize,selectedClass);
+    const loadStudents = async (page: number, selectedClass?: string) => {
+        const data = await fetchStudentsPaginated(page, pageSize,selectedClass||'');
         setStudentDetails(data.students || []);
         setCurrentPage(data.currentPage || 0);
         setTotalPages(data.totalPages || 0);

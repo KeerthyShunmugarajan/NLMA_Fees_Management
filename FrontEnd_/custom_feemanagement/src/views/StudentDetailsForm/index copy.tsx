@@ -22,7 +22,7 @@ const navigate=useNavigate();
 //},[]);
 
 const loadStudents = async (page: number) => {
-        const data = await fetchStudentsPaginated(page, pageSize);
+        const data = await fetchStudentsPaginated(page, pageSize,"I");
         setStudentDetails(data.students);
         setCurrentPage(data.currentPage);
         setTotalPages(data.totalPages);

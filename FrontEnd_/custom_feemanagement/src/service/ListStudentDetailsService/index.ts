@@ -1,20 +1,20 @@
 import axios from "axios";
-import { StudentDetailsResponse } from "../../models/studentDetails.models";
+// import { StudentDetailsResponse } from "../../models/studentDetails.models";
 import { Student } from "../../models/student.model";
 import { IdGeneration } from "../../models/idGeneration.models";
 
-const fetchStudents = async (): Promise<StudentDetailsResponse[]> => {
-    const url = `${process.env.BASE_URL}${process.env.STUDENTDETAILS_ENDPOINT}`;
+// const fetchStudents = async (): Promise<StudentDetailsResponse[]> => {
+//     const url = `${process.env.BASE_URL}${process.env.STUDENTDETAILS_ENDPOINT}`;
 
-    try {
-        const response = await axios.get(url);;
-        return response.data;
-    }
-    catch (error) {
-        console.error("Error fetching student details", error);
-        return [];
-    }
-};
+//     try {
+//         const response = await axios.get(url);;
+//         return response.data;
+//     }
+//     catch (error) {
+//         console.error("Error fetching student details", error);
+//         return [];
+//     }
+// };
 
 const fetchStudentsPaginated = async (page: number, size: number,selectedClass:string): Promise<any> => {
     const url = `${process.env.BASE_URL}${process.env.STUDENTDETAILS_ENDPOINT}/page?page=${page}&size=${size}&studentClass=${selectedClass}`;
