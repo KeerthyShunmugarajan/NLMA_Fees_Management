@@ -11,7 +11,8 @@ const config: Configuration = {
   output: {
     path: path.resolve(__dirname, "../build"),
     filename: "[name].[contenthash].js",
-    publicPath: "",
+     // './' makes sure assets load correctly when you open any nested route (like /login)
+    publicPath: "./",
   },
   module: {
     rules: [
@@ -45,6 +46,8 @@ const config: Configuration = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "src/index.html",
+       // to ensures correct relative links for scripts/styles in the generated index.html
+      publicPath: "./",
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
@@ -54,6 +57,8 @@ const config: Configuration = {
     }),
     new CleanWebpackPlugin(),
   ],
+   // optional but nice for debugging your deployed code
+  devtool: "source-map",
 };
 
 export default config;
