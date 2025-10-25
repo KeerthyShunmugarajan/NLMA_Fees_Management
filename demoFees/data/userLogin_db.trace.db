@@ -3338,3 +3338,6 @@ SELECT * FROM STUDENT_DETAILS WHERE GRADE = I [42122-224]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:840)
+2025-10-25 22:52:54.939360+05:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]"""""; SQL statement:
+"" [42000-224]
