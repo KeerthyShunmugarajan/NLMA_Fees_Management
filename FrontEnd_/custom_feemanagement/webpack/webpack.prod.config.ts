@@ -15,7 +15,7 @@ const config: Configuration = {
     path: path.resolve(__dirname, "../build"),
     filename: "[name].[contenthash].js",
      // './' makes sure assets load correctly when you open any nested route (like /login)
-    publicPath: "",
+    publicPath: "./",
   },
   module: {
     rules: [
