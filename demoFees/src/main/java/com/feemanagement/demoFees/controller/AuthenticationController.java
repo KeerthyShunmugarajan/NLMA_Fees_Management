@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4000", allowedHeaders = "*")
+//@CrossOrigin(origins = "http://localhost:4000", allowedHeaders = "*")
 @RestController
 public class AuthenticationController {
     @Autowired
