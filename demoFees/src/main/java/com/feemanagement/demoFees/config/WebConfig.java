@@ -13,6 +13,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // all API endpoints
                 .allowedOrigins("http://nlma-fee-front.vercel.app/")  // replace with your Vercel URL
-                .allowedMethods("*"); // allow GET, POST, PUT, DELETE, etc.
+                .allowedMethods("*")// allow GET, POST, PUT, DELETE, etc.
+                .allowCredentials(true)
+                .allowedHeaders("*");
     }
 }
