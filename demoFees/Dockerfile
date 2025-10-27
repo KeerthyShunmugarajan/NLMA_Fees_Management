@@ -16,6 +16,6 @@ COPY --from=builder /app/target/*.jar app.jar
 # Copy H2 database
 COPY data ./data
 
-EXPOSE 8080
-
-ENTRYPOINT ["java","-jar","app.jar"]
+# Use Render's dynamic port
+EXPOSE $PORT
+ENTRYPOINT ["sh", "-c", "java -jar app.jar --server.port=$PORT"]
