@@ -2,7 +2,8 @@
 
  const  authenticateUser=(payload:any)=>{
     const url =`${process.env.BASE_URL}${process.env.AUTHENTICATION_ENDPOINT}`;
-    console.log(payload);
+    console.log("url->",url);
+    console.log("payload ->",payload);
     return axios.post(url,payload, 
         {
             headers: {

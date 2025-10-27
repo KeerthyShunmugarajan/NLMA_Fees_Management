@@ -4,7 +4,13 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
-// import webpack from 'webpack';
+// webpack.prod.config.js
+const webpack = require('webpack');
+const dotenv = require('dotenv-webpack');
+//const path = require('path');
+
+// Load .env.prod
+//const env = dotenv.config({ path: path.resolve(__dirname, '.env.prod') }).parsed;
 
 
 
@@ -15,7 +21,7 @@ const config: Configuration = {
     path: path.resolve(__dirname, "../build"),
     filename: "[name].[contenthash].js",
      // './' makes sure assets load correctly when you open any nested route (like /login)
-    publicPath: "./",
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -51,7 +57,7 @@ const config: Configuration = {
       template: "src/index.html",
        inject: "body",
        // to ensures correct relative links for scripts/styles in the generated index.html
-      // publicPath: "./",
+       publicPath: "./",
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
@@ -67,6 +73,14 @@ const config: Configuration = {
   //   "process.env.STUDENTDETAILS_ENDPOINT": JSON.stringify(process.env.STUDENTDETAILS_ENDPOINT),
   //   "process.env.STUDENTID_ENDPOINT": JSON.stringify(process.env.STUDENTID_ENDPOINT),
   // }),
+  new webpack.EnvironmentPlugin({
+  NODE_ENV: 'production', // use 'development' unless process.env.NODE_ENV is defined
+  DEBUG: false,
+}),
+new dotenv({
+  path: 'properties/.env.prod', // Path to .env file (this is the default)
+  safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
+}),
 
   ],
    // optional but nice for debugging your deployed code
