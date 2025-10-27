@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         //String frontendUrl = System.getenv("FRONTEND_URL");
         registry.addMapping("/**")  // all API endpoints
-                .allowedOrigins( "http://localhost:3000","https://nlma-feefront.vercel.app/")  // replace with your Vercel URL
+                .allowedOrigins( "http://localhost:3000","https://nlma-feefront.vercel.app")  // replace with your Vercel URL
                 .allowedMethods("*")// allow GET, POST, PUT, DELETE, etc.
                 .allowCredentials(true)
                 .allowedHeaders("*");
