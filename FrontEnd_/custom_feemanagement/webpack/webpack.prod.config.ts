@@ -66,13 +66,13 @@ const config: Configuration = {
       extensions: ["js", "jsx", "ts", "tsx"],
     }),
     new CleanWebpackPlugin(),
-  //   new webpack.DefinePlugin({
-  //   "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL),
-  //   "process.env.ENDPOINT": JSON.stringify(process.env.ENDPOINT),
-  //   "process.env.AUTHENTICATION_ENDPOINT": JSON.stringify(process.env.AUTHENTICATION_ENDPOINT),
-  //   "process.env.STUDENTDETAILS_ENDPOINT": JSON.stringify(process.env.STUDENTDETAILS_ENDPOINT),
-  //   "process.env.STUDENTID_ENDPOINT": JSON.stringify(process.env.STUDENTID_ENDPOINT),
-  // }),
+    new webpack.DefinePlugin({
+    "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL),
+    "process.env.ENDPOINT": JSON.stringify(process.env.ENDPOINT),
+    "process.env.AUTHENTICATION_ENDPOINT": JSON.stringify(process.env.AUTHENTICATION_ENDPOINT),
+    "process.env.STUDENTDETAILS_ENDPOINT": JSON.stringify(process.env.STUDENTDETAILS_ENDPOINT),
+    "process.env.STUDENTID_ENDPOINT": JSON.stringify(process.env.STUDENTID_ENDPOINT),
+  }),
   new webpack.EnvironmentPlugin({
   NODE_ENV: 'production', // use 'development' unless process.env.NODE_ENV is defined
   DEBUG: false,
