@@ -22,6 +22,11 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @GetMapping("/")
+    public String healthCheck() {
+        return "Backend running OK";
+    }
+
     @GetMapping("/login")
     public String loginPage() {
         return "Welcome to Login Page !";
